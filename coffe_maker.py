@@ -56,6 +56,7 @@ def resource (order):
             return True
 
 def coins():
+    '''Count the change and return in dollars'''
     quarter = int(input("How many quarter you want to insert?: "))
     dime = int(input("How many dime you want to insert?: "))
     nickel = int(input("How many nickel you want to insert?: "))
@@ -65,6 +66,7 @@ def coins():
     return total
 
 def enoughcoins(total, choice):
+    '''Check if the coins are enough to get drink or not'''
     cost = MENU[choice]["cost"]
     if cost > total:
         print("Sorry not enough money. Money is refunded.")
@@ -75,11 +77,13 @@ def enoughcoins(total, choice):
         return True
 
 def make_coffe(drink, ingredients):
+    '''Make coffee and deduct the resources we have'''
     for item in ingredients:
         resources[item] = resources[item] - ingredients[item]
     print(f"Here is your {drink}. Enjoy!!")
-while is_on:
 
+
+while is_on:
     # ask user for their choice
     user_choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
     
@@ -87,19 +91,21 @@ while is_on:
     if user_choice == "off":
         is_on = False 
 
+    # Give the report if the user ask for report
     elif user_choice == "report":
         print(f"Water: {water_resource}")
         print(f"Milk: {milk_resource}")
         print(f"Coffee: {coffee_resource}")
         print(f"Money: {profit}")
     
+    
     else:
-        drink = MENU[user_choice]
-        if resource (drink["ingredients"]):
+        drink = MENU[user_choice] # get the ingedrients from the data
+        if resource (drink["ingredients"]): # check if we have enough resource
             print("We have enough resource.")
             print("Please insert coins.")
-            total = coins()
-            if enoughcoins(total, user_choice):
-                make_coffe(user_choice, drink["ingredients"])
+            total = coins() # get the total 
+            if enoughcoins(total, user_choice): # check if we have enough coins
+                make_coffe(user_choice, drink["ingredients"]) # serve the customer
 
         
