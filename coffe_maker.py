@@ -33,17 +33,7 @@ resources = {
 }
 
 
-# Ask user what do they want
-
-profit = 0 # To record the money we have or will make
-
-# To grab the information from resource
-water_resource = resources["water"]
-milk_resource = resources["milk"]
-coffee_resource = resources["coffee"]
-
 is_on = True # check the coffe machine is on or off
-
 
 
 def resource (order):
@@ -85,7 +75,7 @@ def make_coffe(drink, ingredients):
 
 while is_on:
     # ask user for their choice
-    user_choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
+    user_choice = input("\nWhat would you like? (espresso/latte/cappuccino): ").lower()
     
     # Turn off the coffee when management says it to off.
     if user_choice == "off":
@@ -93,10 +83,12 @@ while is_on:
 
     # Give the report if the user ask for report
     elif user_choice == "report":
+        water_resource = resources["water"]
+        milk_resource = resources["milk"]
+        coffee_resource = resources["coffee"]   
         print(f"Water: {water_resource}")
         print(f"Milk: {milk_resource}")
         print(f"Coffee: {coffee_resource}")
-        print(f"Money: {profit}")
     
     
     else:
