@@ -44,17 +44,62 @@ coffee_resource = resources["coffee"]
 
 is_on = True # check the coffe machine is on or off
 
+
+
+def resource (order):
+    """Check whether or not the resource is enough or not."""
+    for item in order:
+        if order[item]> resources[item]:
+            print(f"Sorry there is not enough {item}.")
+            return False
+        else:
+            return True
+
+def coins():
+    quarter = int(input("How many quarter you want to insert?: "))
+    dime = int(input("How many dime you want to insert?: "))
+    nickel = int(input("How many nickel you want to insert?: "))
+    penny = int(input("How many penny you want to insert?: "))
+
+    total = quarter*0.25 + dime*0.1 + nickel*0.05 +penny*0.01
+    return total
+
+def enoughcoins(total, choice):
+    cost = MENU[choice]["cost"]
+    if cost > total:
+        print("Sorry not enough money. Money is refunded.")
+        return False
+    else:
+        change = round(total - cost, 2)
+        print(f"Here your change is ${change}.")
+        return True
+
+def make_coffe(drink, ingredients):
+    for item in ingredients:
+        resources[item] = resources[item] - ingredients[item]
+    print(f"Here is your {drink}. Enjoy!!")
 while is_on:
 
     # ask user for their choice
-    user_choice = input("What would you like? (expresso/latte/cappuccino): ").lower()
+    user_choice = input("What would you like? (espresso/latte/cappuccino): ").lower()
     
     # Turn off the coffee when management says it to off.
     if user_choice == "off":
         is_on = False 
 
-    if user_choice == "report":
+    elif user_choice == "report":
         print(f"Water: {water_resource}")
         print(f"Milk: {milk_resource}")
         print(f"Coffee: {coffee_resource}")
         print(f"Money: {profit}")
+    
+    else:
+        drink = MENU[user_choice]
+        if resource (drink["ingredients"]):
+            print("We have enough resource.")
+            print("Please insert coins.")
+            total = coins()
+            if enoughcoins(total, user_choice):
+                make_coffe(user_choice, drink["ingredients"])
+
+        
